@@ -1,0 +1,14 @@
+[
+  {
+    "id": "3307",
+    "seasonality": "all-weather",
+    "width": "medium",
+    "surface": "earth"
+  },
+  {
+    "id": "3308",
+    "seasonality": null,
+    "width": null,
+    "surface": null
+  }
+]
