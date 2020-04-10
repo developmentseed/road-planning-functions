@@ -8,7 +8,7 @@ const config = require('../config').default
  * @returns {Object} The road segment with new default attributes.
  */
 function setDefaultAttributes (road) {
-  const overrides = config.defaultAttr.reduce((newA, attr) => {
+  const overrides = config.defaultRoadAttr.reduce((newA, attr) => {
     if (road[attr.key]) return newA
     return {
       ...newA,

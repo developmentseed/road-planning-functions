@@ -8,6 +8,7 @@ describe('Set default attributes', function () {
   it('Don\'t override existing attributes', function () {
     const expected = {
       id: '3307',
+      length: 200,
       seasonality: 'all-weather',
       width: 'medium',
       surface: 'earth'
@@ -18,7 +19,8 @@ describe('Set default attributes', function () {
   it('Override undefined attributes', function () {
     const expected = {
       id: '3308',
-      seasonality: 'dry-season',
+      length: 600,
+      seasonality: 'dry-weather',
       width: 'small',
       surface: 'earth'
     }

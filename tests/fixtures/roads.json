@@ -1,12 +1,14 @@
 [
   {
     "id": "3307",
+    "length": 200,
     "seasonality": "all-weather",
     "width": "medium",
     "surface": "earth"
   },
   {
     "id": "3308",
+    "length": 600,
     "seasonality": null,
     "width": null,
     "surface": null
