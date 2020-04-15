@@ -1,4 +1,4 @@
-module.exports.default = {
+module.exports = {
   // Default road attributes
   defaultRoadAttr: [
     {
@@ -22,7 +22,7 @@ module.exports.default = {
     large: 2
   },
   // Repair costs of a road after flooding.
-  // Amount in $ per km, for a small widt road.
+  // Amount in $ per km, for a small width road.
   repairCostRoad: {
     low: {
       earth: {
@@ -78,4 +78,4 @@ module.exports.default = {
   },
   // Flood return periods
   floodRp: [5, 10, 20, 50, 75, 100, 200, 250, 500, 1000]
-}
+};

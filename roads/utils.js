@@ -1,4 +1,4 @@
-const config = require('../config').default
+const config = require('../instance/config');
 
 /**
  * Sets default attributes when road attributes are missing.
@@ -9,19 +9,19 @@ const config = require('../config').default
  */
 function setDefaultAttributes (road) {
   const overrides = config.defaultRoadAttr.reduce((newA, attr) => {
-    if (road[attr.key]) return newA
+    if (road[attr.key]) return newA;
     return {
       ...newA,
       [attr.key]: attr.value
-    }
-  }, {})
+    };
+  }, {});
 
   return {
     ...road,
     ...overrides
-  }
+  };
 }
 
 module.exports = {
   setDefaultAttributes
-}
+};
