@@ -1,20 +1,20 @@
-const { assert } = require('chai')
+const { assert } = require('chai');
 
-const { setDefaultAttributes } = require('../roads/utils')
+const { setDefaultAttributes } = require('../roads/utils');
 
 describe('Set default attributes', function () {
-  const roadData = require('./fixtures/roads.json')
+  const roadData = require('./fixtures/roads.json');
 
-  it('Don\'t override existing attributes', function () {
+  it("Don't override existing attributes", function () {
     const expected = {
       id: '3307',
       length: 200,
       seasonality: 'all-weather',
       width: 'medium',
       surface: 'earth'
-    }
-    assert.deepEqual(setDefaultAttributes(roadData[0]), expected)
-  })
+    };
+    assert.deepEqual(setDefaultAttributes(roadData[0]), expected);
+  });
 
   it('Override undefined attributes', function () {
     const expected = {
@@ -23,7 +23,7 @@ describe('Set default attributes', function () {
       seasonality: 'dry-weather',
       width: 'small',
       surface: 'earth'
-    }
-    assert.deepEqual(setDefaultAttributes(roadData[1]), expected)
-  })
-})
+    };
+    assert.deepEqual(setDefaultAttributes(roadData[1]), expected);
+  });
+});

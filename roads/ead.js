@@ -1,4 +1,4 @@
-const config = require('../config').default
+const config = require('../instance/config');
 
 /**
  * Calculate expected annual damage (EAD) for damages, using trapezoidal rule.
@@ -13,13 +13,15 @@ const config = require('../config').default
 function calculateEAD (damages) {
   const totalDamage = damages.reduce((sum, d, idx) => {
     // Ignore if last rp
-    if (idx === damages.length - 1) return sum
+    if (idx === damages.length - 1) return sum;
 
-    const nextDamage = damages[idx + 1]
-    return sum + ((1 / d.rp - 1 / nextDamage.rp) * (d.damage + nextDamage.damage))
-  }, 0)
+    const nextDamage = damages[idx + 1];
+    return (
+      sum + (1 / d.rp - 1 / nextDamage.rp) * (d.damage + nextDamage.damage)
+    );
+  }, 0);
 
-  return totalDamage / 2
+  return totalDamage / 2;
 }
 
 /**
@@ -35,13 +37,17 @@ function calculateEAD (damages) {
  */
 function calculateRoadDamage (road, floodDepth) {
   // No damage if waterlevel is below 0.2 meters
-  if (floodDepth < 0.2) return 0
+  if (floodDepth < 0.2) return 0;
 
-  let severity = 'low'
-  if (floodDepth > 0.5 && floodDepth <= 1.5) severity = 'medium'
-  if (floodDepth > 1.5) severity = 'high'
+  let severity = 'low';
+  if (floodDepth > 0.5 && floodDepth <= 1.5) severity = 'medium';
+  if (floodDepth > 1.5) severity = 'high';
 
-  return road.length * config.repairCostRoad[severity][road.surface][road.seasonality] * config.widthMultiplier[road.width]
+  return (
+    road.length *
+    config.repairCostRoad[severity][road.surface][road.seasonality] *
+    config.widthMultiplier[road.width]
+  );
 }
 
 /**
@@ -56,15 +62,15 @@ function calculateRoadDamage (road, floodDepth) {
  * @return {Integer}
  */
 function calculateRoadEAD (road, floods) {
-  const damages = floods.map(f => ({
+  const damages = floods.map((f) => ({
     rp: f.rp,
     damage: calculateRoadDamage(road, f.depth)
-  }))
-  return calculateEAD(damages)
+  }));
+  return calculateEAD(damages);
 }
 
 module.exports = {
   calculateEAD,
   calculateRoadDamage,
   calculateRoadEAD
-}
+};
