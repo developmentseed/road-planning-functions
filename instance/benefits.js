@@ -1,5 +1,5 @@
 /**
- * All the benefits are defines in this file which is shares between the api and
+ * All the benefits are defined in this file which is shared between the API and
  * the analysis service.
  *
  * The calculation of each benefit is defined in the `analysis.js` file of the
