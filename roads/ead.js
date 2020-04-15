@@ -66,6 +66,9 @@ function calculateRoadEAD (road, floods) {
     rp: f.rp,
     damage: calculateRoadDamage(road, f.depth)
   }));
+
+  // Todo: if it wasn't able to calculate EAD, this will return NaN
+  // Catch this in a better way, and throw a warning
   return calculateEAD(damages);
 }
 

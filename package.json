@@ -2,7 +2,7 @@
   "name": "road-planning-functions",
   "version": "0.1.0",
   "description": "Shared functions for the Road Planning project",
-  "main": "src/index.js",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/developmentseed/road-planning-functions"
