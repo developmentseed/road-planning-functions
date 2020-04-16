@@ -74,7 +74,7 @@ const improvements = {
       id: 'bridges-repair',
       name: 'Clean and repair bridges',
       summary: 'Clean and repair bridges - {count} bridges ({len}m)',
-      isEnabled: road => road.bridges > 0,
+      isEnabled: road => !!road.bridges,
       calculateCost: road => {
         return road.length;
       }
