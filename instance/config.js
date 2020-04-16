@@ -75,7 +75,5 @@ module.exports = {
         'not-passable': 10
       }
     }
-  },
-  // Flood return periods
-  floodRp: [5, 10, 20, 50, 75, 100, 200, 250, 500, 1000]
+  }
 };
