@@ -1,4 +1,4 @@
-const indicators = [
+const indicators = process.env.NODE_ENV === 'production' || process.env.USE_PROD_DATA ? [
   // {
   //   id: 'aadtScore', // Equivalent to the filename
   //   stateKey: 'ia', // The state key is used when saving data to the url
@@ -17,6 +17,22 @@ const indicators = [
     stateKey: 'eadp',
     name: 'Flood risk - rain',
     description: 'Estimated Annual Damages caused by flooding due to heavy rain',
+    defaultValue: 3
+  }
+] : [
+  {
+    id: 'criticalityScore',
+    // The state key is used when saving data to the url.
+    // Not sure if it should come from the api... maybe a random mapping
+    // could be created on the frontend?
+    stateKey: 'ic',
+    name: 'Network criticality',
+    defaultValue: 3
+  },
+  {
+    id: 'aadtScore',
+    stateKey: 'ia',
+    name: 'Annual Average Daily Traffic',
     defaultValue: 3
   }
 ];
