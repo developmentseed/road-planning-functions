@@ -75,5 +75,35 @@ module.exports = {
         'not-passable': 10
       }
     }
+  },
+  // Maintenance values for the road agency:
+  //  - recurrent are annual costs per kilometer
+  //  - periodic are costs per kilometer which occur at the interval
+  //  - interval in years
+  maintenanceCostRoad: {
+    earth: {
+      recurrent: 1000,
+      periodic: 10000,
+      interval: 2
+    },
+    'stabilized-soil': {
+      recurrent: 5000,
+      periodic: 20000,
+      interval: 5
+    },
+    asphalt: {
+      recurrent: 10000,
+      periodic: 100000,
+      interval: 10
+    }
+  },
+  interventionCost: {
+    general: {
+      'rehab-earth': 50000,
+      'upgrade-stabilized-soil': 150000,
+      'rehab-stabilized-soil': 100000,
+      'upgrade-asphalt': 300000,
+      'rehab-asphalt': 200000
+    }
   }
 };
