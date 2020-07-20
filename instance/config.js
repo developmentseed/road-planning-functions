@@ -105,5 +105,25 @@ module.exports = {
       'upgrade-asphalt': 300000,
       'rehab-asphalt': 200000
     }
+  },
+  ruc: {
+    type: {
+      RN: 0.1,
+      RD: 0.15,
+      RC: 0.20,
+      RA: 0.25,
+      RU: 0.30,
+      RI: 0.40
+    },
+    seasonalityPenalty: {
+      'all-weather': 0,
+      'dry-weather': 0.1
+      // 'non-passable': BLOCK
+    },
+    surfacePenalty: {
+      asphalt: 0,
+      'stabilized-soil': 0.1,
+      earth: 0.2
+    }
   }
 };
