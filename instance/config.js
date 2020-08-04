@@ -107,6 +107,10 @@ module.exports = {
     }
   },
   ruc: {
+    // IMPORTANT:
+    // There must be a match between the RUC in the instance/config and the
+    // ruc-profile used by OSRM. There's some duplication in the logic because
+    // they're different technologies. Be sure to always update both files.
     type: {
       RN: 0.1,
       RD: 0.15,
