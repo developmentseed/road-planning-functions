@@ -125,5 +125,13 @@ module.exports = {
       'stabilized-soil': 0.1,
       earth: 0.2
     }
+  },
+  defaultAADT: {
+    RN: 300,
+    RD: 200,
+    RC: 100,
+    RA: 50,
+    RU: 30,
+    RI: 10
   }
 };
