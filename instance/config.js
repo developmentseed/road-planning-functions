@@ -1,4 +1,6 @@
 module.exports = {
+  // Design standard in years for which a road is built to last.
+  ROAD_DESIGNSTANDARD: 20,
   // Default road attributes
   defaultRoadAttr: [
     {
