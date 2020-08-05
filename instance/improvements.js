@@ -43,7 +43,7 @@ const improvements = {
       isEnabled: (road) => road.surface === 'earth',
       calculateCost: (road) =>
         generalImprovCost('rehab-earth', road.width, road.length),
-      improveRoad: (road) => road
+      improveRoad: (road) => ({ ...road, drainageCapacity: 1 })
     },
     {
       id: 'upgrade-stabilized-soil',
@@ -52,7 +52,11 @@ const improvements = {
       isEnabled: (road) => road.surface === 'earth',
       calculateCost: (road) =>
         generalImprovCost('upgrade-stabilized-soil', road.width, road.length),
-      improveRoad: (road) => ({ ...road, surface: 'stabilized-soil' })
+      improveRoad: (road) => ({
+        ...road,
+        surface: 'stabilized-soil',
+        drainageCapacity: 1
+      })
     },
     {
       id: 'rehab-stabilized-soil',
@@ -61,7 +65,7 @@ const improvements = {
       isEnabled: (road) => road.surface === 'stabilized-soil',
       calculateCost: (road) =>
         generalImprovCost('rehab-stabilized-soil', road.width, road.length),
-      improveRoad: (road) => road
+      improveRoad: (road) => ({ ...road, drainageCapacity: 1 })
     },
     {
       id: 'upgrade-asphalt',
@@ -71,7 +75,11 @@ const improvements = {
         road.surface === 'earth' || road.surface === 'stabilized-soil',
       calculateCost: (road) =>
         generalImprovCost('upgrade-asphalt', road.width, road.length),
-      improveRoad: (road) => ({ ...road, surface: 'asphalt' })
+      improveRoad: (road) => ({
+        ...road,
+        surface: 'asphalt',
+        drainageCapacity: 1
+      })
     },
     {
       id: 'rehab-asphalt',
@@ -80,7 +88,7 @@ const improvements = {
       isEnabled: (road) => road.surface === 'asphalt',
       calculateCost: (road) =>
         generalImprovCost('rehab-asphalt', road.width, road.length),
-      improveRoad: (road) => road
+      improveRoad: (road) => ({ ...road, drainageCapacity: 1 })
     }
   ],
   culverts: [
