@@ -119,17 +119,23 @@ module.exports = {
       RC: 0.20,
       RA: 0.25,
       RU: 0.30,
-      RI: 0.40
+      RI: 0.40,
+      // Default is the highest value.
+      default: 0.40
     },
     seasonalityPenalty: {
       'all-weather': 0,
-      'dry-weather': 0.1
+      'dry-weather': 0.1,
       // 'non-passable': BLOCK
+      // Default is the highest value.
+      default: 0.1
     },
     surfacePenalty: {
       asphalt: 0,
       'stabilized-soil': 0.1,
-      earth: 0.2
+      earth: 0.2,
+      // Default is the highest value.
+      default: 0.2
     }
   },
   defaultAADT: {
@@ -138,6 +144,8 @@ module.exports = {
     RC: 100,
     RA: 50,
     RU: 30,
-    RI: 10
+    RI: 10,
+    // Default in case road type is not available.
+    default: 10
   }
 };
