@@ -2,7 +2,7 @@ interface Output {
   key: string;
   bucket: string;
   status: 'SUCCEEDED' | 'FAILED' | 'STARTED' | 'PENDING' | 'CANCELLED';
-  output?: string;
+  output?: object;
   createdAt: string;
 }
 
