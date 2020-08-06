@@ -17,8 +17,8 @@ const benefits = [
     name: 'Decreased maintenance cost'
   },
   {
-    id: 'floodEad',
-    name: 'Reduction in flood risk for ANE'
+    id: 'eaul',
+    name: 'Expected annual user loss'
   }
 ];
 
