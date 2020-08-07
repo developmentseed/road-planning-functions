@@ -7,27 +7,27 @@ const s3 = new S3();
  * @param {object} param Options parameters
  * @param {string} param.key S3 object key
  * @param {string} param.bucket S3 bucket
- * @param {string} param.status Status of the operation. One of:
+ * @param {string} param.state Status of the operation. One of:
  *                 SUCCEEDED | FAILED | STARTED | PENDING
  * @param {object} param.output Results of the operation
  * @param {string} param.createdAt Creation date in ISO String
  *
  * @returns Promise
  */
-function storeOutput ({ key, bucket, status, output, createdAt }) {
+function storeOutput ({ key, bucket, state, output, createdAt }) {
   return s3
     .putObject({
       Body: JSON.stringify({
         createdAt,
         updatedAt: new Date().toISOString(),
-        status,
+        state,
         output: output || null
       }),
       Key: key,
       Bucket: bucket,
       ContentType: 'application/json',
       Metadata:
-        status === 'FAILED'
+        state === 'FAILED'
           ? {
             failed: '1'
           }
