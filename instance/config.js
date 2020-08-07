@@ -1,6 +1,48 @@
 module.exports = {
   // Design standard in years for which a road is built to last.
   ROAD_DESIGNSTANDARD: 20,
+  // Available road attributes
+  roadAttr: [
+    {
+      key: 'seasonality',
+      values: [
+        'all-weather',
+        'dry-weather',
+        'not-passable'
+      ],
+      default: 'dry-weather'
+    },
+    {
+      key: 'surface',
+      values: [
+        'asphalt',
+        'stabilized-soil',
+        'earth'
+      ],
+      default: 'earth'
+    },
+    {
+      key: 'width',
+      values: [
+        'large',
+        'medium',
+        'small'
+      ],
+      default: 'small'
+    },
+    {
+      key: 'type',
+      values: [
+        'RN',
+        'RD',
+        'RC',
+        'RA',
+        'RU',
+        'RI'
+      ],
+      default: 'RI'
+    }
+  ],
   // Default road attributes
   defaultRoadAttr: [
     {
