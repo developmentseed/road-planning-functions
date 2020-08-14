@@ -108,7 +108,7 @@ function calculateBridgeDamage (bridge, floodDepth, waterLevelDesign, conditionR
 function calculateBridgeEAD (bridge, conditionRate, floods) {
   // Determine the water level this bridge was designed for
   const floodRp = floods.find(f => f.rp === BRIDGE_DESIGNSTANDARD);
-  const waterLevelDesign = floodRp.depth || 0;
+  const waterLevelDesign = floodRp ? floodRp.depth : 0;
 
   const damages = floods.map((f) => ({
     rp: f.rp,
