@@ -19,6 +19,10 @@ const benefits = [
   {
     id: 'eaul',
     name: 'Expected annual user loss'
+  },
+  {
+    id: 'floodEAD',
+    name: 'Expected annual damage due to floods'
   }
 ];
 
