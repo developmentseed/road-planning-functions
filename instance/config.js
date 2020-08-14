@@ -1,6 +1,8 @@
 module.exports = {
-  // Design standard in years for which a road is built to last.
+  // Design standard in years for which a road / bridge is built to last.
+  // Should be a Return Period available in the flood array
   ROAD_DESIGNSTANDARD: 20,
+  BRIDGE_DESIGNSTANDARD: 100,
   // Available road attributes
   roadAttr: [
     {
@@ -119,6 +121,23 @@ module.exports = {
         'not-passable': 10
       }
     }
+  },
+  // In USD per meter.
+  // Based on 'structure'
+  repairCostBridge: {
+    BA: 44000,
+    'Dalle BA': 44000,
+    MIXTE: 44000,
+    'Pont à tablier': 44000,
+    'Pont Bailey': 44000,
+    'Pont Caisson': 44000,
+    'Pont Uni Bridge': 44000,
+    'Poutres principales': 44000,
+    'PSI-BA': 44000,
+    'PSI-DA': 44000,
+    'PSI-DA   biais': 44000,
+    VIPP: 44000,
+    Voûte: 44000
   },
   // Maintenance values for the road agency:
   //  - recurrent are annual costs per kilometer
