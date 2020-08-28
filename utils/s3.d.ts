@@ -1,8 +1,8 @@
 interface Output {
   key: string;
   bucket: string;
-  status: 'SUCCEEDED' | 'FAILED' | 'STARTED' | 'PENDING' | 'CANCELLED';
-  output?: string;
+  state: 'SUCCEEDED' | 'FAILED' | 'STARTED' | 'PENDING' | 'CANCELLED';
+  output?: object;
   createdAt: string;
 }
 

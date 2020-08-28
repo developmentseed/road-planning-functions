@@ -1,10 +1,10 @@
 // Export data according to environment. See README.md for information.
 const indicators = process.env.NODE_ENV === 'production' || process.env.USE_PROD_DATA ? [
-  // {
-  //   id: 'aadtScore', // Equivalent to the filename
-  //   name: 'Annual Average Daily Traffic',
-  //   defaultValue: 3
-  // },
+  {
+    id: 'aadt',
+    name: 'Annual Average Daily Traffic',
+    defaultValue: 3
+  },
   {
     id: 'flood-ead-fu',
     name: 'Flood risk - scour',
