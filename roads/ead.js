@@ -112,7 +112,7 @@ function calculateBridgeEAD (bridge, conditionRate, floods) {
 
   const damages = floods.map((f) => ({
     rp: f.rp,
-    damage: calculateBridgeDamage(bridge, conditionRate, f.depth, waterLevelDesign)
+    damage: calculateBridgeDamage(bridge, f.depth, waterLevelDesign, conditionRate)
   }));
   return calculateEAD(damages);
 }
