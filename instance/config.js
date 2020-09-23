@@ -160,6 +160,9 @@ module.exports = {
       interval: 10
     }
   },
+  // Cost of each of the interventions. Units are:
+  //   - usd/km for general interventions
+  //   - usd/meters for bridges
   interventionCost: {
     general: {
       'rehab-earth': 50000,
@@ -167,6 +170,21 @@ module.exports = {
       'rehab-stabilized-soil': 100000,
       'upgrade-asphalt': 300000,
       'rehab-asphalt': 200000
+    },
+    bridges: {
+      BA: 44000,
+      'Dalle BA': 44000,
+      MIXTE: 44000,
+      'Pont à tablier': 44000,
+      'Pont Bailey': 44000,
+      'Pont Caisson': 44000,
+      'Pont Uni Bridge': 44000,
+      'Poutres principales': 44000,
+      'PSI-BA': 44000,
+      'PSI-DA': 44000,
+      'PSI-DA   biais': 44000,
+      VIPP: 44000,
+      Voûte: 44000
     }
   },
   ruc: {

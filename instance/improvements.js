@@ -34,6 +34,13 @@ const generalImprovCost = (improv, width, length) =>
   constConfiguration.widthMultiplier[width] *
   (length / 1000);
 
+const bridgeImprovCost = (bridges) =>
+  // A single road can have multiple bridges
+  bridges.reduce((sum, bridge) => {
+    const cost = constConfiguration.interventionCost.bridges[bridge.structure] * bridge.length;
+    return sum + cost;
+  }, 0);
+
 const improvements = {
   general: [
     {
@@ -118,9 +125,8 @@ const improvements = {
       name: 'Clean and repair bridges',
       summary: 'Clean and repair bridges - {count} bridges ({len}m)',
       isEnabled: (road) => !!road.bridges,
-      calculateCost: (road) => {
-        return road.length;
-      },
+      calculateCost: (road) =>
+        bridgeImprovCost(road.bridges),
       improveRoad: (road) => road
     }
   ]
