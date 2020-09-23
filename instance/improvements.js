@@ -98,27 +98,6 @@ const improvements = {
       improveRoad: (road) => ({ ...road, drainageCapacity: 1 })
     }
   ],
-  culverts: [
-    {
-      id: 'culverts-repair',
-      name: 'Replace culverts',
-      summary: 'Clean and repair culverts - {count} culverts',
-      isEnabled: (road) => road.culverts > 0,
-      calculateCost: (road) => {
-        return road.length;
-      }
-    },
-    {
-      id: 'culverts-replace',
-      name: 'Clean and repair culverts',
-      summary: 'Replace culverts - {count} culverts',
-      isEnabled: (road) => road.culverts > 0 && road.condition !== 'good',
-      calculateCost: (road) => {
-        return road.length;
-      },
-      improveRoad: (road) => road
-    }
-  ],
   bridges: [
     {
       id: 'bridges-repair',
