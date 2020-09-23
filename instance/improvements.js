@@ -8,7 +8,6 @@ const constConfiguration = require('./config');
  * The improvements object (exported as default) must define 3
  * improvement groups:
  * - general - Improvements to be applied to the roads.
- * - culverts - Improvements to be applied to culvers.
  * - bridges - Improvements to be applied to bridges.
  *
  * Each group consists of an array of improvements that must have the
@@ -21,7 +20,6 @@ const constConfiguration = require('./config');
  *   Name of the improvement for the cost and benefit screen. It supports
  *   different tokens depending on the improvement group:
  *   - general - {len}: length of the segment
- *   - culverts - {count}: amount of culverts
  *   - bridges - {len}: length of the bridges {count}: amount of bridges
  * - isEnabled:
  *   Function returning a boolean value depending on whether or not the
@@ -34,12 +32,14 @@ const generalImprovCost = (improv, width, length) =>
   constConfiguration.widthMultiplier[width] *
   (length / 1000);
 
-const bridgeImprovCost = (bridges) =>
+const bridgeImprovCost = (bridges) => {
+  if (!bridges) return 0;
   // A single road can have multiple bridges
-  bridges.reduce((sum, bridge) => {
+  return bridges.reduce((sum, bridge) => {
     const cost = constConfiguration.interventionCost.bridges[bridge.structure] * bridge.length;
     return sum + cost;
   }, 0);
+}
 
 const improvements = {
   general: [
