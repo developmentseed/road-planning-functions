@@ -8,7 +8,6 @@ const constConfiguration = require('./config');
  * The improvements object (exported as default) must define 3
  * improvement groups:
  * - general - Improvements to be applied to the roads.
- * - culverts - Improvements to be applied to culvers.
  * - bridges - Improvements to be applied to bridges.
  *
  * Each group consists of an array of improvements that must have the
@@ -21,7 +20,6 @@ const constConfiguration = require('./config');
  *   Name of the improvement for the cost and benefit screen. It supports
  *   different tokens depending on the improvement group:
  *   - general - {len}: length of the segment
- *   - culverts - {count}: amount of culverts
  *   - bridges - {len}: length of the bridges {count}: amount of bridges
  * - isEnabled:
  *   Function returning a boolean value depending on whether or not the
@@ -33,6 +31,15 @@ const generalImprovCost = (improv, width, length) =>
   constConfiguration.interventionCost.general[improv] *
   constConfiguration.widthMultiplier[width] *
   (length / 1000);
+
+const bridgeImprovCost = (bridges) => {
+  if (!bridges) return 0;
+  // A single road can have multiple bridges
+  return bridges.reduce((sum, bridge) => {
+    const cost = constConfiguration.interventionCost.bridges[bridge.structure] * bridge.length;
+    return sum + cost;
+  }, 0);
+}
 
 const improvements = {
   general: [
@@ -91,36 +98,14 @@ const improvements = {
       improveRoad: (road) => ({ ...road, drainageCapacity: 1 })
     }
   ],
-  culverts: [
-    {
-      id: 'culverts-repair',
-      name: 'Replace culverts',
-      summary: 'Clean and repair culverts - {count} culverts',
-      isEnabled: (road) => road.culverts > 0,
-      calculateCost: (road) => {
-        return road.length;
-      }
-    },
-    {
-      id: 'culverts-replace',
-      name: 'Clean and repair culverts',
-      summary: 'Replace culverts - {count} culverts',
-      isEnabled: (road) => road.culverts > 0 && road.condition !== 'good',
-      calculateCost: (road) => {
-        return road.length;
-      },
-      improveRoad: (road) => road
-    }
-  ],
   bridges: [
     {
       id: 'bridges-repair',
       name: 'Clean and repair bridges',
       summary: 'Clean and repair bridges - {count} bridges ({len}m)',
       isEnabled: (road) => !!road.bridges,
-      calculateCost: (road) => {
-        return road.length;
-      },
+      calculateCost: (road) =>
+        bridgeImprovCost(road.bridges),
       improveRoad: (road) => road
     }
   ]
