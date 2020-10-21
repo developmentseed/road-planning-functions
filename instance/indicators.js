@@ -18,13 +18,13 @@ const indicators = process.env.NODE_ENV === 'production' || process.env.USE_PROD
     defaultValue: 3
   },
   {
-    id: 'criticality-education',
+    id: 'od-education',
     name: 'Education',
     description: 'The importance of road segments to get to educational facilities',
     defaultValue: 3
   },
   {
-    id: 'criticality-healthcare',
+    id: 'od-healthcare',
     name: 'Healthcare',
     description: 'The importance of road segments to get to healthcare facilities',
     defaultValue: 3
