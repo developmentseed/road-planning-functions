@@ -16,6 +16,18 @@ const indicators = process.env.NODE_ENV === 'production' || process.env.USE_PROD
     name: 'Flood risk - rain',
     description: 'Estimated Annual Damages caused by flooding due to heavy rain',
     defaultValue: 3
+  },
+  {
+    id: 'criticality-education',
+    name: 'Education',
+    description: 'The importance of road segments to get to educational facilities',
+    defaultValue: 3
+  },
+  {
+    id: 'criticality-healthcare',
+    name: 'Healthcare',
+    description: 'The importance of road segments to get to healthcare facilities',
+    defaultValue: 3
   }
 ] : [
   {
