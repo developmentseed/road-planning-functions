@@ -33,10 +33,11 @@ function calculateEAD (damages) {
  * @param {Object} road                 Object with road properties
  * @param {Number} road.length          Road segment length in meters
  * @param {Number} floodDepth           Flood depth in meters
+ * @param {Number} percFlooded          Percent of road length that is flooded. Value between 0 and 1
  *
  * @return {Number}
  */
-function calculateRoadDamage (road, floodDepth) {
+function calculateRoadDamage (road, floodDepth, percFlooded) {
   // No damage if waterlevel is below 0.2 meters
   if (floodDepth < 0.2) return 0;
 
@@ -45,7 +46,7 @@ function calculateRoadDamage (road, floodDepth) {
   if (floodDepth > 1.5) severity = 'high';
 
   return (
-    road.length *
+    road.length * percFlooded *
     config.repairCostRoad[severity][road.surface][road.seasonality] *
     config.widthMultiplier[road.width]
   );
@@ -58,14 +59,15 @@ function calculateRoadDamage (road, floodDepth) {
  * @param {Object} road                 Road properties
  * @param {Array} floods                Array with flood depths
  * @param {Number} floods[].rp          Return period
- * @param {Number} floods[].depth       Flood depth in meter
+ * @param {Number} floods[].depth   Flood depth in meter
+ * @param {Number} floods[].percFlooded Percent of road length that is flooded. Value between 0 and 1.
  *
  * @return {Number}
  */
 function calculateRoadEAD (road, floods) {
   const damages = floods.map((f) => ({
     rp: f.rp,
-    damage: calculateRoadDamage(road, f.depth)
+    damage: calculateRoadDamage(road, f.depth, f.percFlooded)
   }));
   return calculateEAD(damages);
 }
@@ -101,7 +103,8 @@ function calculateBridgeDamage (bridge, floodDepth, waterLevelDesign, conditionR
  * @param {Number} conditionRate        Condition rate of the bridge
  * @param {Array} floods                Array with flood depths
  * @param {Number} floods[].rp          Return period
- * @param {Number} floods[].depth       Flood depth in meter
+ * @param {Number} floods[].depth   Flood depth in meter
+ * @param {Number} floods[].percFlooded Percent of road length that is flooded. Value between 0 and 1.
  *
  * @return {Number}
  */
