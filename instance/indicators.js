@@ -30,7 +30,7 @@ const indicators = process.env.NODE_ENV === 'production' || process.env.USE_PROD
     defaultValue: 3
   },
   {
-    id: 'od-healthcare',
+    id: 'od-market',
     name: 'Markets',
     description: 'The importance of road segments to get from a populated place to the closest market',
     defaultValue: 3
