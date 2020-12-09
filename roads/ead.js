@@ -1,13 +1,10 @@
-const config = require('../instance/config');
-const { BRIDGE_DESIGNSTANDARD } = require('../instance/config');
-
 /**
  * Calculate expected annual damage (EAD) for damages, using trapezoidal rule.
  *
  * @param  {Array} damages            Array with values for damages for the
  *                                    return periods.
  * @param {Number} damages.rp        Return period
- * @param {Number} damages.damage    Damange for the return period
+ * @param {Number} damages.damage    Damage for the return period
  *
  * @return {Number}
  */
@@ -34,10 +31,11 @@ function calculateEAD (damages) {
  * @param {Number} road.length          Road segment length in meters
  * @param {Number} floodDepth           Flood depth in meters
  * @param {Number} percFlooded          Percent of road length that is flooded. Value between 0 and 1
+ * @param {object} costConfig Cost configuration for the analysis
  *
  * @return {Number}
  */
-function calculateRoadDamage (road, floodDepth, percFlooded) {
+function calculateRoadDamage (road, floodDepth, percFlooded, costConfig) {
   // No damage if waterlevel is below 0.2 meters
   if (floodDepth < 0.2) return 0;
 
@@ -47,8 +45,8 @@ function calculateRoadDamage (road, floodDepth, percFlooded) {
 
   return (
     road.length * percFlooded *
-    config.repairCostRoad[severity][road.surface][road.seasonality] *
-    config.widthMultiplier[road.width]
+    costConfig.repairCostRoad[severity][road.surface][road.seasonality] *
+    costConfig.widthMultiplier[road.width]
   );
 }
 
@@ -61,13 +59,14 @@ function calculateRoadDamage (road, floodDepth, percFlooded) {
  * @param {Number} floods[].rp          Return period
  * @param {Number} floods[].depth   Flood depth in meter
  * @param {Number} floods[].percFlooded Percent of road length that is flooded. Value between 0 and 1.
+ * @param {object} costConfig Cost configuration for the analysis
  *
  * @return {Number}
  */
-function calculateRoadEAD (road, floods) {
+function calculateRoadEAD (road, floods, costConfig) {
   const damages = floods.map((f) => ({
     rp: f.rp,
-    damage: calculateRoadDamage(road, f.depth, f.percFlooded)
+    damage: calculateRoadDamage(road, f.depth, f.percFlooded, costConfig)
   }));
   return calculateEAD(damages);
 }
@@ -82,13 +81,14 @@ function calculateRoadEAD (road, floods) {
  * @param {Number} floodDepth           Flood depth in meters
  * @param {Number} waterLevelDesign     The water level this bridge was designed for
  * @param {Number} conditionRate        Condition rate of the bridge
+ * @param {object} costConfig Cost configuration for the analysis
  *
  * @return {Number}
  */
-function calculateBridgeDamage (bridge, floodDepth, waterLevelDesign, conditionRate) {
+function calculateBridgeDamage (bridge, floodDepth, waterLevelDesign, conditionRate, costConfig) {
   const drainageCapacity = 0.7;
 
-  const repairCost = config.repairCostBridge[bridge.structure] * bridge.length;
+  const repairCost = costConfig.repairCostBridge[bridge.structure] * bridge.length;
 
   // Return 0 if damage is negative. Happens when waterLevel doesn't reach
   // above waterLevelDesign * drainageCapacity
@@ -105,17 +105,18 @@ function calculateBridgeDamage (bridge, floodDepth, waterLevelDesign, conditionR
  * @param {Number} floods[].rp          Return period
  * @param {Number} floods[].depth   Flood depth in meter
  * @param {Number} floods[].percFlooded Percent of road length that is flooded. Value between 0 and 1.
+ * @param {object} costConfig Cost configuration for the analysis
  *
  * @return {Number}
  */
-function calculateBridgeEAD (bridge, conditionRate, floods) {
+function calculateBridgeEAD (bridge, conditionRate, floods, costConfig) {
   // Determine the water level this bridge was designed for
-  const floodRp = floods.find(f => f.rp === BRIDGE_DESIGNSTANDARD);
+  const floodRp = floods.find(f => f.rp === costConfig.BRIDGE_DESIGNSTANDARD);
   const waterLevelDesign = floodRp ? floodRp.depth : 0;
 
   const damages = floods.map((f) => ({
     rp: f.rp,
-    damage: calculateBridgeDamage(bridge, f.depth, waterLevelDesign, conditionRate)
+    damage: calculateBridgeDamage(bridge, f.depth, waterLevelDesign, conditionRate, costConfig)
   }));
   return calculateEAD(damages);
 }
