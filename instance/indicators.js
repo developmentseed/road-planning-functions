@@ -34,6 +34,12 @@ const indicators = process.env.NODE_ENV === 'production' || process.env.USE_PROD
     name: 'Markets',
     description: 'The importance of road segments to get from a populated place to the closest market',
     defaultValue: 3
+  },
+  {
+    id: 'criticality',
+    name: 'Criticality',
+    description: 'Critical',
+    defaultValue: 3
   }
 ] : [
   {
