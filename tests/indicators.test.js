@@ -81,6 +81,18 @@ describe('Add scaled score to indicators', function () {
     assert.deepEqual(addScaledScore(input, { log: true, customMin: 0 }), output);
   });
 
+  it('Doesn\'t return a score less than 0 when using logscale', function () {
+    const input = [
+      { value: 0 },
+      { value: 100 }
+    ];
+    const output = [
+      { value: 0, score: 0 },
+      { value: 100, score: 100 }
+    ];
+    assert.deepEqual(addScaledScore(input, { log: true }), output);
+  });
+
   it('Handle non-numeric values', function () {
     const input = [
       { value: 0 },

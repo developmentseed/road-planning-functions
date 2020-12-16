@@ -53,9 +53,11 @@ function addScaledScore (data, options = {}) {
         : datum.value;
 
       value = log ? Math.log(value) : value;
+      const score = round((value - domain[0]) * 100 / range, 2);
+
       return {
         ...datum,
-        score: round((value - domain[0]) * 100 / range, 2)
+        score: score < 0 ? 0 : score
       };
     });
 }
