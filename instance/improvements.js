@@ -27,19 +27,25 @@ const constConfiguration = require('./config');
  *   Function signature: isEnabled(road)
  */
 
-const generalImprovCost = (improv, width, length) =>
-  constConfiguration.interventionCost.general[improv] *
-  constConfiguration.widthMultiplier[width] *
+const generalImprovCost = (
+  improv,
+  width,
+  length,
+  costConfig = constConfiguration
+) =>
+  costConfig.interventionCost.general[improv] *
+  costConfig.widthMultiplier[width] *
   (length / 1000);
 
-const bridgeImprovCost = (bridges) => {
+const bridgeImprovCost = (bridges, costConfig = constConfiguration) => {
   if (!bridges) return 0;
   // A single road can have multiple bridges
   return bridges.reduce((sum, bridge) => {
-    const cost = constConfiguration.interventionCost.bridges[bridge.structure] * bridge.length;
+    const cost =
+      costConfig.interventionCost.bridges[bridge.structure] * bridge.length;
     return sum + cost;
   }, 0);
-}
+};
 
 const improvements = {
   general: [
@@ -48,8 +54,8 @@ const improvements = {
       name: 'Rehab earth',
       summary: 'Rehabilitate earth road',
       isEnabled: (road) => road.surface === 'earth',
-      calculateCost: (road) =>
-        generalImprovCost('rehab-earth', road.width, road.length),
+      calculateCost: (road, costConfig) =>
+        generalImprovCost('rehab-earth', road.width, road.length, costConfig),
       improveRoad: (road) => ({ ...road, drainageCapacity: 1 })
     },
     {
@@ -57,8 +63,13 @@ const improvements = {
       name: 'Upgrade to stabilized soil',
       summary: 'Upgrade to stabilized soil - {len}km',
       isEnabled: (road) => road.surface === 'earth',
-      calculateCost: (road) =>
-        generalImprovCost('upgrade-stabilized-soil', road.width, road.length),
+      calculateCost: (road, costConfig) =>
+        generalImprovCost(
+          'upgrade-stabilized-soil',
+          road.width,
+          road.length,
+          costConfig
+        ),
       improveRoad: (road) => ({
         ...road,
         surface: 'stabilized-soil',
@@ -70,8 +81,13 @@ const improvements = {
       name: 'Rehab stabilized soil',
       summary: 'Rehabilitate stabilized soil road',
       isEnabled: (road) => road.surface === 'stabilized-soil',
-      calculateCost: (road) =>
-        generalImprovCost('rehab-stabilized-soil', road.width, road.length),
+      calculateCost: (road, costConfig) =>
+        generalImprovCost(
+          'rehab-stabilized-soil',
+          road.width,
+          road.length,
+          costConfig
+        ),
       improveRoad: (road) => ({ ...road, drainageCapacity: 1 })
     },
     {
@@ -80,8 +96,13 @@ const improvements = {
       summary: 'Upgrade to asphalt - {len}km',
       isEnabled: (road) =>
         road.surface === 'earth' || road.surface === 'stabilized-soil',
-      calculateCost: (road) =>
-        generalImprovCost('upgrade-asphalt', road.width, road.length),
+      calculateCost: (road, costConfig) =>
+        generalImprovCost(
+          'upgrade-asphalt',
+          road.width,
+          road.length,
+          costConfig
+        ),
       improveRoad: (road) => ({
         ...road,
         surface: 'asphalt',
@@ -93,8 +114,8 @@ const improvements = {
       name: 'Rehab asphalt',
       summary: 'Rehabilitate asphalt road',
       isEnabled: (road) => road.surface === 'asphalt',
-      calculateCost: (road) =>
-        generalImprovCost('rehab-asphalt', road.width, road.length),
+      calculateCost: (road, costConfig) =>
+        generalImprovCost('rehab-asphalt', road.width, road.length, costConfig),
       improveRoad: (road) => ({ ...road, drainageCapacity: 1 })
     }
   ],
@@ -104,8 +125,8 @@ const improvements = {
       name: 'Clean and repair bridges',
       summary: 'Clean and repair bridges - {count} bridges ({len}m)',
       isEnabled: (road) => !!road.bridges,
-      calculateCost: (road) =>
-        bridgeImprovCost(road.bridges),
+      calculateCost: (road, costConfig) =>
+        bridgeImprovCost(road.bridges, costConfig),
       improveRoad: (road) => road
     }
   ]
@@ -117,7 +138,7 @@ function getImprovementsMeta () {
   );
 }
 
-function calcImprovementCost (group, improvement, road) {
+function calcImprovementCost (group, improvement, road, costConfig) {
   const impGroup = improvements[group] || [];
   const imp = impGroup.find((i) => i.id === improvement);
 
@@ -125,7 +146,7 @@ function calcImprovementCost (group, improvement, road) {
     throw new TypeError(`Improvement ${group}.${improvement} does not exist`);
   }
 
-  return imp.calculateCost(road);
+  return imp.calculateCost(road, costConfig);
 }
 
 function calcImprovedRoad (group, improvement, road) {
